@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:startDestination="@+id/main_fragment">
+
+    <fragment
+        android:id="@+id/main_fragment"
+        android:name="dev.mako.rxsingleentrypoint.ui.main.MainFragment">
+        <action
+            android:id="@+id/action_fragment_one"
+            app:destination="@id/fragment_one"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_fragment_two"
+            app:destination="@id/fragment_two"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_fragment_three"
+            app:destination="@id/fragment_three"
+            app:popUpToInclusive="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_one"
+        android:name="dev.mako.rxsingleentrypoint.ui.main.FragmentOne"/>
+    <fragment
+        android:id="@+id/fragment_two"
+        android:name="dev.mako.rxsingleentrypoint.ui.main.FragmentTwo"/>
+    <fragment
+        android:id="@+id/fragment_three"
+        android:name="dev.mako.rxsingleentrypoint.ui.main.FragmentThree"/>
+</navigation>

@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import dev.mako.rxsingleentrypoint.R
 import dev.mako.rxsingleentrypoint.ui.main.MainViewModel.ButtonType
@@ -16,10 +15,6 @@ import kotlinx.android.synthetic.main.main_fragment.*
 
 class MainFragment : Fragment() {
     private val navController by lazy { NavHostFragment.findNavController(this) }
-
-    companion object {
-        fun newInstance() = MainFragment()
-    }
 
     private lateinit var viewModel: MainViewModel
 
@@ -72,26 +67,14 @@ class MainFragment : Fragment() {
     }
 
     private fun openFragmentThree() {
-        val opts = NavOptions.Builder()
-            .setEnterAnim(android.R.anim.slide_in_left)
-            .setExitAnim(android.R.anim.slide_out_right)
-            .build()
-        navController.navigate(R.id.action_fragment_three, null, opts)
+        navController.navigate(R.id.fragment_three)
     }
 
     private fun openFragmentTwo() {
-        val opts = NavOptions.Builder()
-            .setEnterAnim(android.R.anim.slide_in_left)
-            .setExitAnim(android.R.anim.slide_out_right)
-            .build()
-        navController.navigate(R.id.action_fragment_two, null, opts)
+        navController.navigate(R.id.fragment_two)
     }
 
     private fun openFragmentOne() {
-        val opts = NavOptions.Builder()
-            .setEnterAnim(android.R.anim.slide_in_left)
-            .setExitAnim(android.R.anim.slide_out_right)
-            .build()
-        navController.navigate(R.id.action_fragment_one, null, opts)
+        navController.navigate(R.id.fragment_one)
     }
 }

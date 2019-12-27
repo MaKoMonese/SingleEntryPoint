@@ -13,7 +13,7 @@ fun <T> Flow<T>.throttleFist(windowDuration: Long): Flow<T> = flow {
         val currentTime = System.currentTimeMillis()
         val delta = currentTime - windowStartTime
         if (delta >= windowDuration) {
-            windowStartTime += delta / windowDuration * windowDuration
+            windowStartTime += delta
             emitted = false
         }
         if (!emitted) {

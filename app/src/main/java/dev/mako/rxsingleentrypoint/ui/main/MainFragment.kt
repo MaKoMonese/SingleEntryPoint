@@ -67,7 +67,7 @@ class MainFragment : Fragment() {
             viewModel.onButtonClicked(ButtonType.FRAGMENT_TWO)
         }
         btn_coroutine_fragment3.setOnClickListener {
-            viewModel.onButtonClicked(ButtonType.FRAGMENT_ONE)
+            viewModel.onButtonClicked(ButtonType.FRAGMENT_THREE)
         }
     }
 

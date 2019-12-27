@@ -27,9 +27,7 @@ class MainViewModel : ViewModel() {
     }
 
     private val parentJob = Job()
-
     private val channel = BroadcastChannel<ButtonType>(3)
-
     private val coroutineExceptionHandler: CoroutineExceptionHandler =
         CoroutineExceptionHandler { _, throwable ->
             coroutineScope.launch(Dispatchers.Main) {
@@ -58,18 +56,18 @@ class MainViewModel : ViewModel() {
         observe()
     }
 
-    fun onButtonClickedRx(it: ButtonType) {
-        buttonClickEmitterRx.onNext(it)
+    fun onButtonClickedRx(type: ButtonType) {
+        buttonClickEmitterRx.onNext(type)
     }
 
-    fun onButtonClicked(it: ButtonType) {
+    fun onButtonClicked(type: ButtonType) {
         coroutineScope.launch {
-            channel.send(it)
+            channel.send(type)
         }
     }
 
-    private fun processButtonClick(buttonType: ButtonType) {
-        when (buttonType) {
+    private fun processButtonClick(type: ButtonType) {
+        when (type) {
             ButtonType.FRAGMENT_ONE -> navigateToFragmentOne()
             ButtonType.FRAGMENT_TWO -> navigateToFragmentTwo()
             ButtonType.FRAGMENT_THREE -> navigateToFragmentThree()

@@ -1,7 +1,8 @@
 package dev.mako.rxsingleentrypoint.utils
 
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
 
 class CoroutineExt
 

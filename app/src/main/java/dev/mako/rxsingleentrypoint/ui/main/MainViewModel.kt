@@ -6,10 +6,12 @@ import dev.mako.rxsingleentrypoint.SingleLiveEvent
 import dev.mako.rxsingleentrypoint.utils.throttleFist
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 
 private const val CLICK_EMITTER_THROTTLE_DURATION = 1000L
@@ -26,23 +28,10 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    private val parentJob = Job()
     private val channel = BroadcastChannel<ButtonType>(3)
-    private val coroutineExceptionHandler: CoroutineExceptionHandler =
-        CoroutineExceptionHandler { _, throwable ->
-            coroutineScope.launch(Dispatchers.Main) {
-                /* handle error here */
-            }
-
-            GlobalScope.launch { throwable.printStackTrace() }
-        }
-    private val coroutineScope = CoroutineScope(
-        Dispatchers.Main + parentJob +
-                coroutineExceptionHandler
-    )
 
     private fun observe() {
-        coroutineScope.launch {
+        CoroutineScope(Main).launch{
             channel
                 .asFlow()
                 .throttleFist(CLICK_EMITTER_THROTTLE_DURATION)
@@ -61,7 +50,7 @@ class MainViewModel : ViewModel() {
     }
 
     fun onButtonClicked(type: ButtonType) {
-        coroutineScope.launch {
+        CoroutineScope(Main).launch{
             channel.send(type)
         }
     }
@@ -98,8 +87,4 @@ class MainViewModel : ViewModel() {
         FRAGMENT_THREE
     }
 
-    override fun onCleared() {
-        coroutineScope.cancel()
-        super.onCleared()
-    }
 }

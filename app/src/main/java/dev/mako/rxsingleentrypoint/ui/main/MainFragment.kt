@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
 import dev.mako.rxsingleentrypoint.R
 import dev.mako.rxsingleentrypoint.ui.main.MainViewModel.ButtonType
@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.main_fragment.*
 class MainFragment : Fragment() {
     private val navController by lazy { NavHostFragment.findNavController(this) }
 
-    private lateinit var viewModel: MainViewModel
+    private val viewModel  by viewModels<MainViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,8 +32,7 @@ class MainFragment : Fragment() {
     }
 
     private fun setupViewModel() {
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-        viewModel.navigation.observe(this, Observer(::onNavigation))
+        viewModel.navigation.observe(requireActivity(), Observer(::onNavigation))
     }
 
     private fun onNavigation(navigation: MainNavigation) {
@@ -45,16 +44,11 @@ class MainFragment : Fragment() {
     }
 
     private fun setupListeners() {
-        btn_rx_fragment1.setOnClickListener {
-            viewModel.onButtonClickedRx(ButtonType.FRAGMENT_ONE)
-        }
-        btn_rx_fragment2.setOnClickListener {
-            viewModel.onButtonClickedRx(ButtonType.FRAGMENT_TWO)
-        }
-        btn_rx_fragment3.setOnClickListener {
-            viewModel.onButtonClickedRx(ButtonType.FRAGMENT_THREE)
-        }
+        setupListenersForRx()
+        setupListenersForCorutines()
+    }
 
+    private fun setupListenersForCorutines() {
         btn_coroutine_fragment1.setOnClickListener {
             viewModel.onButtonClicked(ButtonType.FRAGMENT_ONE)
         }
@@ -63,6 +57,18 @@ class MainFragment : Fragment() {
         }
         btn_coroutine_fragment3.setOnClickListener {
             viewModel.onButtonClicked(ButtonType.FRAGMENT_THREE)
+        }
+    }
+
+    private fun setupListenersForRx() {
+        btn_rx_fragment1.setOnClickListener {
+            viewModel.onButtonClickedRx(ButtonType.FRAGMENT_ONE)
+        }
+        btn_rx_fragment2.setOnClickListener {
+            viewModel.onButtonClickedRx(ButtonType.FRAGMENT_TWO)
+        }
+        btn_rx_fragment3.setOnClickListener {
+            viewModel.onButtonClickedRx(ButtonType.FRAGMENT_THREE)
         }
     }
 
